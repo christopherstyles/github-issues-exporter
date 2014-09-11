@@ -44,14 +44,17 @@ module GithubIssuesExporter
       end
 
       def milestone_param
+        return nil unless params[:milestone]
         params[:milestone].blank? ? nil : params[:milestone]
       end
 
       def org_param
+        return nil unless params[:org]
         params[:org].blank? ? nil : params[:org]
       end
 
       def repo_param
+        return nil unless params[:repo]
         params[:repo].blank? ? nil : params[:repo]
       end
 
