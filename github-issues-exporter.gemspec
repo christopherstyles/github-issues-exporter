@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['christopherstyles@gmail.com']
   spec.summary       = %q{An exporter for github issues.}
   spec.description   = %q{An exporter to various formats from github issues.}
-  spec.homepage      = ''
+  spec.homepage      = 'http://github-issues-exporter.herokuapp.com/'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rake'
   spec.add_dependency 'rspec'
   spec.add_dependency 'sinatra'
+  spec.add_dependency 'sinatra_auth_github'
   spec.add_dependency 'sinatra-contrib'
   spec.add_dependency 'sinatra-partial'
   spec.add_dependency 'slim'
