@@ -1,0 +1,20 @@
+nav.navbar.navbar-default
+  .container-fluid
+    .navbar-left
+      button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse"
+        span class="sr-only" Toggle navigation
+        span class="icon-bar"
+        span class="icon-bar"
+        span class="icon-bar"
+      .text-nowrap
+        a href="https://github.com/#{user.login}"
+          img.user-thumbnail src="http://www.gravatar.com/avatar/#{user.gravatar_id}?s=40"
+          .user-name
+            = user.name
+
+    #navbar-collapse.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-right
+        li
+          a href="/logout" Logout
+      / ul.nav.navbar-nav
+

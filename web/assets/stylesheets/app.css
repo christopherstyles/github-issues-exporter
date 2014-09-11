@@ -1,0 +1,28 @@
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.user-thumbnail {
+  margin: 10px;
+  vertical-align: middle;
+  display: inline;
+}
+
+.user-name {
+  display: inline;
+}
+
+.form-inline > * {
+   margin: 0px 3px;
+}
+
+.label-square {
+  display: inline-block;
+  height: 10px;
+  margin-right: 3px;
+  width: 10px;
+}
+
+.bottom-padded {
+  padding-bottom: 15px;
+}

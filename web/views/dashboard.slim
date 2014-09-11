@@ -1,3 +1,107 @@
-.row
-  .col-md-12
-    h2 Dashboard
+.container-fluid
+  .row
+    .col-md-12
+      form.form-inline.bottom-padded role="form" action="/dashboard" method="get"
+        .form-group
+          select.form-control name="org"
+            option value=""
+              | -- Select an organization:
+            - @organizations.each do |org|
+              option value="#{org.login}" *{ selected: params[:org] == org.login } = org.login
+
+        .form-group
+          select.form-control name="repo"
+            option value=""
+              | -- Select a repo
+            - @repos.each do |repo|
+              option value="#{repo.name}" *{ selected: params[:repo] == repo.name } = repo.name
+
+        - if params[:repo]
+          label Issues
+
+          - if @milestones
+            .form-group
+              select.form-control name="milestone"
+                option value=""
+                  | -- Select a milestone
+                - @milestones.each do |milestone|
+                  option value="#{milestone.number}" *{ selected: params[:milestone] == milestone.number.to_s } = milestone.title
+
+          .radio
+            label
+              input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } Open
+
+          .radio
+            label
+              input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } Closed
+
+          .form-group
+            select.form-control name="sort"
+              option value="created" *{ selected: params[:sort] == 'created' } Created
+              option value="updated" *{ selected: params[:sort] == 'updated' } Updated
+
+        button.btn.btn-default type="submit" Go
+
+  - if @issues
+    .row
+      .col-md-12
+        .alert.alert-warning role="alert"
+          button.close type="button" data-dismiss="alert"
+            span aria-hidden="true" &times;
+            span class="sr-only" Close
+          strong> = @issues.length
+          | matching issues.
+    .row
+      .col-md-12
+        a.btn.btn-default.btn-info type="button" href="/issues.csv?#{request.query_string}"
+          span.glyphicon.glyphicon-cloud-download>
+          | Download as CSV
+    .row
+      .col-md-12
+        table.table
+          thead
+            tr
+              th
+                | #
+              th
+                | Title
+              th
+                | Creator
+              th
+                | Assigned to
+              th
+                | State
+              th
+                | Labels
+              th
+                | Created at
+              th
+                | Updated at
+          tbody
+            - @issues.each do |issue|
+              tr
+                td
+                  a href="#{issue.html_url}"
+                    | #
+                    = issue.number
+                td
+                  = issue.title
+                td
+                  = issue.user.login
+                td
+                  = issue.assignee.login if issue.assignee
+                td
+                  = issue.state
+                td
+                  - if issue.labels.any?
+                    ul.list-unstyled
+                      - issue.labels.each do |label|
+                        li.text-nowrap
+                          .label-square style="background-color: ##{label.color}"
+                          a href="#{label.url}" = label.name
+                td
+                  = issue.created_at
+                td
+                  = issue.updated_at
+
+
