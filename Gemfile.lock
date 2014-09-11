@@ -2,6 +2,21 @@ PATH
   remote: .
   specs:
     github_issues_exporter (0.0.1)
+      bundler (~> 1.6)
+      coveralls
+      dotenv
+      guard
+      guard-rspec
+      octokit
+      pry
+      rake
+      rspec
+      sinatra
+      sinatra-contrib
+      sinatra-partial
+      slim
+      thin
+      verbs
 
 GEM
   remote: https://rubygems.org/
@@ -135,19 +150,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.6)
-  coveralls
-  dotenv
   github_issues_exporter!
-  guard
-  guard-rspec
-  octokit
-  pry
-  rake
-  rspec
-  sinatra
-  sinatra-contrib
-  sinatra-partial
-  slim
-  thin
-  verbs
