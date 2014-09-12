@@ -164,6 +164,7 @@ DEPENDENCIES
   guard-rspec
   newrelic_rpm
   pry
+  rack-test
   rake
   rb-fsevent (~> 0.9)
   rspec (>= 3.0)
