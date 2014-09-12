@@ -1,3 +1,4 @@
+require 'better_errors'
 require 'csv'
 require 'dotenv'
 require 'octokit'
@@ -18,11 +19,7 @@ module GithubIssuesExporter
 
     helpers do
       def repos
-        if org_param
-          github_user.api.org_repos(org_param, type: 'private')
-        else
-          github_user.api.repositories(type: 'all')
-        end
+        github_user.api.repositories(type: 'all')
       end
 
       def orgs
@@ -30,46 +27,39 @@ module GithubIssuesExporter
       end
 
       def issues
-        return nil unless repo_param
+        return [] unless params[:repo]
 
-        github_user.api.list_issues(repository_name, issue_filters)
+        github_user.api.list_issues(params[:repo], issue_filters)
       end
 
       def milestones
-        if repo_param
-          github_user.api.list_milestones(repository_name)
-        else
-          nil
-        end
-      end
+        return [] unless params[:repo]
 
-      def milestone_param
-        return nil unless params[:milestone]
-        params[:milestone].blank? ? nil : params[:milestone]
-      end
-
-      def org_param
-        return nil unless params[:org]
-        params[:org].blank? ? nil : params[:org]
-      end
-
-      def repo_param
-        return nil unless params[:repo]
-        params[:repo].blank? ? nil : params[:repo]
+        github_user.api.list_milestones(repository_name)
       end
 
       def repository_name
-        [org_param, repo_param].compact.join('/')
+        [params[:org], params[:repo]].reject { |name| name == '' }.compact.join('/')
       end
 
       def issue_filters
-        {
-          milestone: milestone_param,
-          state: params[:state] ? params[:state] : 'open',
+        filters = {
+          state: params[:state],
           per_page: 100,
-          sort: params[:sort] ? params[:sort] : 'created',
-        }.compact
+          sort: params[:sort]
+        }
+
+        if params[:milestone] && params[:milestone] != '*'
+          filters.merge!(milestone: params[:milestone])
+        end
+
+        filters
       end
+    end
+
+    configure :development do
+      use BetterErrors::Middleware
+      BetterErrors.application_root = __dir__
     end
 
     configure do
@@ -101,8 +91,8 @@ module GithubIssuesExporter
 
     get '/dashboard' do
       authenticate!
-      @github_user = github_user
 
+      @github_user = github_user
       @repos = repos
       @organizations = orgs
       @milestones = milestones
