@@ -27,7 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sinatra-contrib'
   spec.add_dependency 'sinatra-partial'
   spec.add_dependency 'slim'
-
-  spec.add_development_dependency 'thin'
 end
 
