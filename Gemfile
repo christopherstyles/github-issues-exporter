@@ -16,8 +16,11 @@ group :test do
   gem 'capybara'
   gem 'coveralls', require: false
   gem 'rb-fsevent', '~> 0.9'
-  gem 'rspec', '>= 3.0'
   gem 'webmock', '>= 1.9'
+end
+
+group :development, :test do
+  gem 'rspec', '>= 3.0'
 end
 
 gemspec
