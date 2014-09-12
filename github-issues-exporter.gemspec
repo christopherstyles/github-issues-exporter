@@ -17,25 +17,17 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
-
-  spec.add_development_dependency 'better_errors'
-  spec.add_development_dependency 'binding_of_caller'
+  spec.required_ruby_version = '>= 2.1.2'
 
   spec.add_dependency 'bundler', '~> 1.6'
-  spec.add_dependency 'coveralls'
   spec.add_dependency 'dotenv'
-  spec.add_dependency 'guard'
-  spec.add_dependency 'guard-rspec'
   spec.add_dependency 'octokit'
-  spec.add_dependency 'pry'
-  spec.add_dependency 'rake'
-  spec.add_dependency 'rspec'
   spec.add_dependency 'sinatra'
   spec.add_dependency 'sinatra_auth_github'
   spec.add_dependency 'sinatra-contrib'
   spec.add_dependency 'sinatra-partial'
   spec.add_dependency 'slim'
-  spec.add_dependency 'thin'
-  spec.add_dependency 'verbs'
+
+  spec.add_development_dependency 'thin'
 end
 
