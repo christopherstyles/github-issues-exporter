@@ -1,48 +1,46 @@
 .container-fluid
   .row
     .col-md-12
-      form.form-inline.bottom-padded role="form" action="/dashboard" method="get"
-        .form-group
-          select.form-control name="org"
-            option value=""
-              | -- Select an organization:
-            - @organizations.each do |org|
-              option value="#{org.login}" *{ selected: params[:org] == org.login } = org.login
-
+      form.form-inline.bottom-padded role="form" action="/dashboard" method="get" data-parsley-validate=true
         .form-group
           select.form-control name="repo"
             option value=""
               | -- Select a repo
-            - @repos.each do |repo|
-              option value="#{repo.name}" *{ selected: params[:repo] == repo.name } = repo.name
+            optgroup label="Your repos"
+              - @repos.each do |repo|
+                option value="#{repo.name}" *{ selected: params[:repo] == repo.name } = repo.name
 
-        - if params[:repo]
-          label Issues
+            - @organizations.each do |org|
+              optgroup label="#{org.login}"
+                - @github_user.api.org_repos(org.login).each do |org_repo|
+                  option value="#{org_repo.full_name}" *{ selected: params[:repo] == org_repo.full_name } = "#{org_repo.full_name}"
 
-          - if @milestones
-            .form-group
-              select.form-control name="milestone"
-                option value=""
-                  | -- Select a milestone
-                - @milestones.each do |milestone|
-                  option value="#{milestone.number}" *{ selected: params[:milestone] == milestone.number.to_s } = milestone.title
+        label Issues
 
-          .radio
-            label
-              input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } Open
-
-          .radio
-            label
-              input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } Closed
-
+        - if @milestones.any?
           .form-group
-            select.form-control name="sort"
-              option value="created" *{ selected: params[:sort] == 'created' } Created
-              option value="updated" *{ selected: params[:sort] == 'updated' } Updated
+            select.form-control name="milestone"
+              option value="*"
+                | -- Select a milestone
+              - @milestones.each do |milestone|
+                option value="#{milestone.number}" *{ selected: params[:milestone] == milestone.number.to_s } = milestone.title
+
+        .radio
+          label
+            input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } Open
+
+        .radio
+          label
+            input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } Closed
+
+        .form-group
+          select.form-control name="sort"
+            option value="created" *{ selected: params[:sort] == 'created' } Created
+            option value="updated" *{ selected: params[:sort] == 'updated' } Updated
 
         button.btn.btn-default type="submit" Go
 
-  - if @issues
+  - if @issues.any?
     .row
       .col-md-12
         .alert.alert-warning role="alert"
@@ -73,9 +71,9 @@
                 | State
               th
                 | Labels
-              th
+              th.text-nowrap
                 | Created at
-              th
+              th.text-nowrap
                 | Updated at
           tbody
             - @issues.each do |issue|
