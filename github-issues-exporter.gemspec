@@ -18,6 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.add_development_dependency 'better_errors'
+  spec.add_development_dependency 'binding_of_caller'
+
   spec.add_dependency 'bundler', '~> 1.6'
   spec.add_dependency 'coveralls'
   spec.add_dependency 'dotenv'
