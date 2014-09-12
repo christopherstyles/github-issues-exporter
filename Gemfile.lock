@@ -71,6 +71,7 @@ GEM
     multi_json (1.10.1)
     multipart-post (2.0.0)
     netrc (0.7.7)
+    newrelic_rpm (3.9.4.245)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     octokit (3.3.1)
@@ -161,6 +162,7 @@ DEPENDENCIES
   coveralls
   github_issues_exporter!
   guard-rspec
+  newrelic_rpm
   pry
   rake
   rb-fsevent (~> 0.9)

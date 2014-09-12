@@ -6,6 +6,7 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sinatra/partial'
 require 'slim'
+require 'newrelic_rpm'
 
 require 'github_issues_exporter/web_helpers'
 

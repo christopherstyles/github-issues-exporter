@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.1.2'
 
 gem 'rake'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'better_errors'
