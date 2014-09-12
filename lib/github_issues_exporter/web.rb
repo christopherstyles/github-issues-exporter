@@ -18,23 +18,21 @@ module GithubIssuesExporter
 
     helpers do
       def repos
-        github_user.api.repositories(type: 'all')
+        @repos ||= github_user.api.repositories(type: 'all')
       end
 
       def orgs
-        github_user.api.organizations
+        @orgs ||= github_user.api.organizations
       end
 
       def issues
         return [] unless params[:repo]
-
-        github_user.api.list_issues(params[:repo], issue_filters)
+        @issues ||= github_user.api.list_issues(params[:repo], issue_filters)
       end
 
       def milestones
         return [] unless params[:repo]
-
-        github_user.api.list_milestones(repository_name)
+        @milestones ||= github_user.api.list_milestones(params[:repo])
       end
 
       def repository_name
@@ -104,7 +102,7 @@ module GithubIssuesExporter
 
     get '/issues.csv' do
       content_type 'application/csv'
-      attachment "issues.csv"
+      attachment 'issues.csv'
 
       @issues = issues
 
@@ -129,6 +127,10 @@ module GithubIssuesExporter
     get '/logout' do
       logout!
       redirect 'https://github.com'
+    end
+
+    not_found do
+      slim :not_found
     end
   end
 end
