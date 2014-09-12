@@ -1,4 +1,3 @@
-require 'better_errors'
 require 'csv'
 require 'dotenv'
 require 'octokit'
@@ -58,6 +57,8 @@ module GithubIssuesExporter
     end
 
     configure :development do
+      require 'better_errors'
+
       use BetterErrors::Middleware
       BetterErrors.application_root = __dir__
     end
