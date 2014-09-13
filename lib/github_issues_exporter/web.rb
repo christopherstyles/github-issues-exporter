@@ -117,7 +117,7 @@ module GithubIssuesExporter
 
     get '/logout' do
       logout!
-      redirect 'https://github.com'
+      redirect '/'
     end
 
     not_found do
