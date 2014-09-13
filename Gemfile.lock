@@ -3,13 +3,6 @@ PATH
   specs:
     github_issues_exporter (0.0.1)
       bundler (~> 1.6)
-      dotenv
-      octokit
-      sinatra
-      sinatra-contrib
-      sinatra-partial
-      sinatra_auth_github
-      slim
 
 GEM
   remote: https://rubygems.org/
@@ -160,12 +153,19 @@ DEPENDENCIES
   binding_of_caller
   capybara
   coveralls
+  dotenv
   github_issues_exporter!
   guard-rspec
   newrelic_rpm
+  octokit
   pry
   rack-test
   rake
   rb-fsevent (~> 0.9)
   rspec (>= 3.0)
+  sinatra
+  sinatra-contrib
+  sinatra-partial
+  sinatra_auth_github
+  slim
   webmock (>= 1.9)

@@ -2,8 +2,15 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rake'
+gem 'dotenv'
 gem 'newrelic_rpm'
+gem 'octokit'
+gem 'rake'
+gem 'sinatra'
+gem 'sinatra_auth_github'
+gem 'sinatra-contrib'
+gem 'sinatra-partial'
+gem 'slim'
 
 group :test, :development do
   gem 'rspec', '>= 3.0'
