@@ -74,10 +74,6 @@ module GithubIssuesExporter
       }
     end
 
-    configure :development do
-      register Sinatra::Reloader
-    end
-
     get '/' do
       @github_user = nil
       slim :index

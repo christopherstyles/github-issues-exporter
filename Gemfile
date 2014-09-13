@@ -8,7 +8,6 @@ gem 'octokit'
 gem 'rake'
 gem 'sinatra'
 gem 'sinatra_auth_github'
-gem 'sinatra-contrib'
 gem 'sinatra-partial'
 gem 'slim'
 
