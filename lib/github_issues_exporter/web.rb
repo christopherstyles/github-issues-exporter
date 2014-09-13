@@ -1,14 +1,8 @@
-require 'csv'
-require 'dotenv'
-require 'octokit'
-require 'sinatra/auth/github'
-require 'sinatra/base'
-require 'sinatra/reloader'
-require 'sinatra/partial'
-require 'slim'
-require 'newrelic_rpm'
+ENV['RACK_ENV'] ||= 'development'
 
-require 'github_issues_exporter/web_helpers'
+Bundler.require :default, ENV['RACK_ENV'].to_sym
+
+require_relative 'web_helpers'
 
 Dotenv.load
 

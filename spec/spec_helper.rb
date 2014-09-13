@@ -3,7 +3,6 @@ Coveralls.wear!
 
 ENV['RACK_ENV'] ||= 'test'
 
-require 'rack/test'
 require 'sinatra/auth/github'
 require 'sinatra/auth/github/test/test_helper'
 require 'capybara/rspec'
