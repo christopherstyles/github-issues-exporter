@@ -132,10 +132,6 @@ module GithubIssuesExporter
       end
     end
 
-    get '/signed_out' do
-      slim :signed_out
-    end
-
     not_found do
       slim :not_found
     end
