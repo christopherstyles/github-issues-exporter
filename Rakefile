@@ -1,4 +1,4 @@
-unless Rails.env.production?
+unless ENV['RACK_ENV'] == 'production'
   require 'rspec/core/rake_task'
   require 'bundler/gem_tasks'
 
