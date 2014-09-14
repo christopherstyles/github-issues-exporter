@@ -1,0 +1,12 @@
+.container-fluid
+  .row
+    .col-md-12
+      - if env['warden'].authenticated?
+        h3 You have been signed in.
+        p
+          | You’ve been authenticated via github, continue to the <a href="/dashboard">Dashboard</a>.
+      - else
+        h3 You are not currently signed in.
+        p
+          | You will be authenticated via github when you visit the <a href="/dashboard">Dashboard</a>
+

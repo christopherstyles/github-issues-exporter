@@ -81,6 +81,21 @@ module GithubIssuesExporter
     end
 
     get '/' do
+      @github_user = github_user
+      slim :index
+    end
+
+    get '/login' do
+      authenticate!
+      redirect '/'
+    end
+
+    get '/logout' do
+      logout!
+      redirect '/'
+    end
+
+    get '/dashboard' do
       authenticate!
 
       @github_user = github_user
@@ -115,11 +130,6 @@ module GithubIssuesExporter
           ]
         end
       end
-    end
-
-    get '/logout' do
-      logout!
-      redirect '/signed_out'
     end
 
     get '/signed_out' do

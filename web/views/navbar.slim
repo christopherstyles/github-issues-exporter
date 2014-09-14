@@ -7,15 +7,18 @@ nav.navbar.navbar-default
         span class="icon-bar"
         span class="icon-bar"
       .text-nowrap
-        img.user-thumbnail src="http://www.gravatar.com/avatar/#{user.gravatar_id}?s=120" width="40" height="40"
-        .user-name
-          ' Logged in as
-          a href="https://github.com/#{user.login}"
-            = user.name
+        - if env['warden'].authenticated? && user
+          img.user-thumbnail src="http://www.gravatar.com/avatar/#{user.gravatar_id}?s=120" width="40" height="40"
+          .user-name
+            ' Logged in as
+            a href="https://github.com/#{user.login}"
+              = user.name
 
     #navbar-collapse.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a href="/logout" Logout
-      / ul.nav.navbar-nav
+          - if env['warden'].authenticated?
+            a href="/logout" Logout
+          - else
+            a href="/login" Login
 

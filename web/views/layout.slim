@@ -6,7 +6,7 @@ html
     link rel="stylesheet" href="#{root_path}stylesheets/app.css"
     meta name="google-site-verification" content="dHIjBJupeoOH63Ep9ZQMgFv3E3NQw9j2Gpaca45W1AQ"
   body
-    == partial 'navbar', locals: { user: @github_user } if @github_user
+    == partial 'navbar', locals: { user: @github_user }
     == yield
 
   script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
