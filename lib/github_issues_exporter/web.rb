@@ -1,5 +1,7 @@
 ENV['RACK_ENV'] ||= 'development'
 
+require 'csv'
+
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 
 require_relative 'web_helpers'
