@@ -3,8 +3,8 @@ require 'spec_helper'
 RSpec.describe GithubIssuesExporter::Web, type: :feature do
   let(:user) do
     make_user(
-      'login' => 'jimbo',
-      'name' => 'Jimbo Baggins'
+      login: 'jimbo',
+      name: 'Jimbo Baggins'
     )
   end
 
