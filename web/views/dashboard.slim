@@ -38,6 +38,11 @@
             option value="created" *{ selected: params[:sort] == 'created' } Created
             option value="updated" *{ selected: params[:sort] == 'updated' } Updated
 
+        .form-group
+          select.form-control name="direction"
+            option value="desc" *{ selected: params[:direction] == 'desc' } Descending
+            option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
+
         button.btn.btn-default type="submit" Go
 
   - if @issues.any?

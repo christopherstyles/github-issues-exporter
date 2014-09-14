@@ -40,7 +40,8 @@ module GithubIssuesExporter
         filters = {
           state: params[:state],
           per_page: 100,
-          sort: params[:sort]
+          sort: params[:sort],
+          direction: params[:direction] || 'desc'
         }
 
         if params[:milestone] && params[:milestone] != '*'
