@@ -74,12 +74,11 @@ module GithubIssuesExporter
       }
     end
 
-    get '/' do
-      @github_user = nil
-      slim :index
+    configure :development do
+      register Sinatra::Reloader
     end
 
-    get '/dashboard' do
+    get '/' do
       authenticate!
 
       @github_user = github_user
@@ -92,6 +91,7 @@ module GithubIssuesExporter
     end
 
     get '/issues.csv' do
+      authenticate!
       content_type 'application/csv'
       attachment 'issues.csv'
 
@@ -117,7 +117,11 @@ module GithubIssuesExporter
 
     get '/logout' do
       logout!
-      redirect '/'
+      redirect '/signed_out'
+    end
+
+    get '/signed_out' do
+      slim :signed_out
     end
 
     not_found do
