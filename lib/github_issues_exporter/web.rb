@@ -57,6 +57,8 @@ module GithubIssuesExporter
 
       use BetterErrors::Middleware
       BetterErrors.application_root = __dir__
+
+      register Sinatra::Reloader
     end
 
     configure do
@@ -75,10 +77,6 @@ module GithubIssuesExporter
         secret:    ENV['GITHUB_CLIENT_SECRET'],
         client_id: ENV['GITHUB_CLIENT_ID'],
       }
-    end
-
-    configure :development do
-      register Sinatra::Reloader
     end
 
     get '/' do
