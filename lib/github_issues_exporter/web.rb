@@ -68,7 +68,7 @@ module GithubIssuesExporter
       set :root, File.expand_path(File.dirname(__FILE__) + '/../../web')
       set :public_folder, proc { "#{root}/assets" }
       set :views, proc { "#{root}/views" }
-      set :slim, pretty: false, format: :html5
+      set :slim, pretty: true, format: :html5
       set :partial_template_engine, :slim
       set :github_options, {
         scopes:    'user,repo,read:org',
