@@ -3,7 +3,7 @@
     .col-md-12
       form.form-inline.bottom-padded role="form" action="/dashboard" method="get" data-parsley-validate=true
         .form-group
-          select.form-control name="repo"
+          select.form-control name="repo" required=true
             option value=""
               | -- Select a repo
             optgroup label="Your repos"
