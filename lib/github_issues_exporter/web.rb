@@ -41,7 +41,8 @@ module GithubIssuesExporter
           state: params[:state],
           per_page: 100,
           sort: params[:sort],
-          direction: params[:direction] || 'desc'
+          direction: params[:direction] || 'desc',
+          since: params[:since]
         }
 
         if params[:milestone] && params[:milestone] != '*'

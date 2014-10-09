@@ -43,6 +43,12 @@
             option value="desc" *{ selected: params[:direction] == 'desc' } Descending
             option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
 
+        .form-group
+          .datetimepicker.input-group.date data-toggle="tooltip" data-placement="top" title="Only issues updated at or after this time are returned." data-container="body"
+            input.form-control type="datetime" name="since" data-date-format="YYYY-MM-DDTHH:MM:SSZ" value="#{params[:since]}"
+            span.input-group-addon
+              span.glyphicon.glyphicon-calendar
+
         button.btn.btn-default type="submit" Go
 
   - if @issues.any?
@@ -106,5 +112,3 @@
                   = issue.created_at
                 td
                   = issue.updated_at
-
-
