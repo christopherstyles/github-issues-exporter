@@ -1,0 +1,10 @@
+{
+  "name": "github-issues-exporter dependencies",
+  "dependencies": {
+    "bootstrap": "latest",
+    "eonasdan-bootstrap-datetimepicker": "latest",
+    "jquery": "latest",
+    "moment": "latest",
+    "parsleyjs": "latest"
+  }
+}

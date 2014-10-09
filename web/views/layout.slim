@@ -2,17 +2,22 @@ doctype html
 html
   head
     title Github Issues Exporter
-    link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    link href="#{root_path}/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" /
+    link href="#{root_path}/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" /
+    link rel="stylesheet" href="#{root_path}/bower_components/parsleyjs/src/parsley.css"
     link rel="stylesheet" href="#{root_path}/stylesheets/app.css"
-    link rel="stylesheet" href="#{root_path}/stylesheets/parsley.css"
+
     meta name="google-site-verification" content="dHIjBJupeoOH63Ep9ZQMgFv3E3NQw9j2Gpaca45W1AQ"
   body
     == partial 'navbar', locals: { user: @github_user }
     == yield
 
-  script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
-  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
-  script src="#{root_path}/javascripts/parsley.min.js"
+  script src="#{root_path}/bower_components/jquery/dist/jquery.min.js" type="text/javascript"
+  script src="#{root_path}/bower_components/moment/min/moment.min.js" type="text/javascript"
+  script src="#{root_path}/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"
+  script src="#{root_path}/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"
+  script src="#{root_path}/bower_components/parsleyjs/dist/parsley.min.js"
+  script src="#{root_path}/javascripts/app.js"
 
   - if ENV['RACK_ENV'] == 'production'
     javascript:
