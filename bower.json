@@ -5,6 +5,8 @@
     "eonasdan-bootstrap-datetimepicker": "latest",
     "jquery": "latest",
     "moment": "latest",
-    "parsleyjs": "latest"
+    "parsleyjs": "latest",
+    "select2": "~3.5.1",
+    "select2-bootstrap-css": "~1.4.1"
   }
 }

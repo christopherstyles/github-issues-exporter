@@ -27,6 +27,11 @@ module GithubIssuesExporter
         @issues ||= github_user.api.list_issues(params[:repo], issue_filters)
       end
 
+      def labels
+        return [] unless params[:repo]
+        @labels ||= github_user.api.labels(params[:repo])
+      end
+
       def milestones
         return [] unless params[:repo]
         @milestones ||= github_user.api.list_milestones(params[:repo])
@@ -42,7 +47,8 @@ module GithubIssuesExporter
           per_page: 100,
           sort: params[:sort],
           direction: params[:direction] || 'desc',
-          since: params[:since]
+          since: params[:since],
+          labels: params[:labels]
         }
 
         if params[:milestone] && params[:milestone] != '*'
@@ -102,6 +108,7 @@ module GithubIssuesExporter
       @repos = repos
       @organizations = orgs
       @milestones = milestones
+      @labels = labels.map { |label| label.name }
       @issues = issues
 
       slim :dashboard

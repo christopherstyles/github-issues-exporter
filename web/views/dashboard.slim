@@ -44,6 +44,11 @@
             option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
 
         .form-group
+          select.form-control.input-xlarge.select2 name="labels" multiple=true placeholder="Select a label"
+            - labels.each do |label_name|
+              option value="#{label_name}" = label_name
+
+        .form-group
           .datetimepicker.input-group.date data-toggle="tooltip" data-placement="top" title="Only issues updated at or after this time are returned." data-container="body"
             input.form-control type="datetime" name="since" data-date-format="YYYY-MM-DDTHH:MM:SSZ" value="#{params[:since]}"
             span.input-group-addon
