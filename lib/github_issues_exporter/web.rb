@@ -50,7 +50,7 @@ module GithubIssuesExporter
           sort: params[:sort],
           direction: params[:direction] || 'desc',
           since: params[:since],
-          labels: params[:labels].join(',')
+          labels: params[:labels].to_a.join(',')
         }
 
         if params[:milestone] && params[:milestone] != '*'
