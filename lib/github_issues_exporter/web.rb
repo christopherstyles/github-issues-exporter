@@ -30,6 +30,7 @@ module GithubIssuesExporter
       def labels
         return [] unless params[:repo]
         @labels ||= github_user.api.labels(params[:repo])
+                      .sort_by! { |label| label.name.downcase }
       end
 
       def milestones
@@ -38,7 +39,8 @@ module GithubIssuesExporter
       end
 
       def repository_name
-        [params[:org], params[:repo]].reject { |name| name == '' }.compact.join('/')
+        [params[:org], params[:repo]]
+          .reject { |name| name == '' }.compact.join('/')
       end
 
       def issue_filters
@@ -48,7 +50,7 @@ module GithubIssuesExporter
           sort: params[:sort],
           direction: params[:direction] || 'desc',
           since: params[:since],
-          labels: params[:labels]
+          labels: params[:labels].join(',')
         }
 
         if params[:milestone] && params[:milestone] != '*'
@@ -79,11 +81,10 @@ module GithubIssuesExporter
       set :views, proc { "#{root}/views" }
       set :slim, pretty: true, format: :html5
       set :partial_template_engine, :slim
-      set :github_options, {
-        scopes:    'user,repo,read:org',
-        secret:    ENV['GITHUB_CLIENT_SECRET'],
-        client_id: ENV['GITHUB_CLIENT_ID'],
-      }
+      set :github_options,
+          scopes:    'user,repo,read:org',
+          secret:    ENV['GITHUB_CLIENT_SECRET'],
+          client_id: ENV['GITHUB_CLIENT_ID']
     end
 
     get '/' do
