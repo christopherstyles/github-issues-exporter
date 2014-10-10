@@ -1,134 +1,145 @@
-.container-fluid
-  .row
-    .col-md-12
-      form.form-inline.bottom-padded role="form" action="/dashboard" method="get" data-parsley-validate=true
-        .form-group
-          select.form-control name="repo" required=true
-            option value=""
-              | -- Select a repo
-            optgroup label="Your repos"
-              - @repos.each do |repo|
-                option value="#{repo.name}" *{ selected: params[:repo] == repo.name } = repo.name
+.snap-drawers
+  .snap-drawer.snap-drawer-left
+    .container-fluid
+      .row
+        .col-md-12
+          form.top-padded.bottom-padded role="form" action="/dashboard" method="get" data-parsley-validate=true
+            .form-group
+              label Select a Repo
+              select.form-control name="repo" required=true
+                option value=""
+                  | -- Select a repo
+                optgroup label="Your repos"
+                  - @repos.each do |repo|
+                    option value="#{repo.name}" *{ selected: params[:repo] == repo.name } = repo.name
 
-            - @organizations.each do |org|
-              optgroup label="#{org.login}"
-                - @github_user.api.org_repos(org.login).each do |org_repo|
-                  option value="#{org_repo.full_name}" *{ selected: params[:repo] == org_repo.full_name } = "#{org_repo.full_name}"
+                - @organizations.each do |org|
+                  optgroup label="#{org.login}"
+                    - @github_user.api.org_repos(org.login).each do |org_repo|
+                      option value="#{org_repo.full_name}" *{ selected: params[:repo] == org_repo.full_name } = "#{org_repo.full_name}"
 
-        - if @milestones.any?
-          .form-group
-            select.form-control name="milestone"
-              option value="*"
-                | -- Select a milestone
-              - @milestones.each do |milestone|
-                option value="#{milestone.number}" *{ selected: params[:milestone] == milestone.number.to_s } = milestone.title
+            - if @milestones.any?
+              .form-group
+                label Milestone
+                select.form-control name="milestone"
+                  option value="*"
+                    | -- Select a milestone
+                  - @milestones.each do |milestone|
+                    option value="#{milestone.number}" *{ selected: params[:milestone] == milestone.number.to_s } = milestone.title
 
-        .radio
-          label
-            input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } = ' Open'
+            .form-group
+              label.radio-inline
+                input type="radio" name="state" value="open" data-parsley-errors-container=".state-errors" *{ checked: params[:state] == 'open' || !params[:state] } = ' Open'
+              label.radio-inline
+                input type="radio" name="state" value="closed" data-parsley-errors-container=".state-errors" *{ checked: params[:state] == 'closed' } = ' Closed'
+              label.radio-inline
+                input type="radio" name="state" value="all" data-parsley-errors-container=".state-errors" *{ checked: params[:state] == 'all' } = ' All'
+              .state-errors
 
-        .radio
-          label
-            input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } = ' Closed'
+            .form-group
+              label Sort by
+              select.form-control name="sort"
+                option value="created" *{ selected: params[:sort] == 'created' } Created
+                option value="updated" *{ selected: params[:sort] == 'updated' } Updated
 
-        .radio
-          label
-            input type="radio" name="state" value="all" *{ checked: params[:state] == 'all' } = ' All'
+            .form-group
+              label Sort direction
+              select.form-control name="direction"
+                option value="desc" *{ selected: params[:direction] == 'desc' } Descending
+                option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
 
-        .form-group
-          select.form-control name="sort" data-toggle="tooltip" data-placement="top" title="Sort by:" data-container="body"
-            option value="created" *{ selected: params[:sort] == 'created' } Created
-            option value="updated" *{ selected: params[:sort] == 'updated' } Updated
+            .form-group
+              label Labels
+              .select2-wrapper
+                select.form-control.select2 name="labels[]" multiple="multiple" placeholder="Select a label"
+                  - labels.each do |label_name|
+                    option value="#{label_name}" *{ selected: (params[:labels].to_a.include?(label_name)) ? 'selected' : nil} = label_name
 
-        .form-group
-          select.form-control name="direction" data-toggle="tooltip" data-placement="top" title="The direction of the sort" data-container="body"
-            option value="desc" *{ selected: params[:direction] == 'desc' } Descending
-            option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
+            .form-group
+              label Since
+              .datetimepicker.input-group.date data-toggle="tooltip" data-placement="top" title="Only issues updated at or after this time are returned." data-container="body"
+                input.form-control type="datetime" name="since" data-date-format="YYYY-MM-DDTHH:MM:SSZ" value="#{params[:since]}"
+                span.input-group-addon
+                  span.glyphicon.glyphicon-calendar
 
-        .form-group
-          .select2-wrapper
-            select.form-control.select2 name="labels[]" multiple="multiple" placeholder="Select a label" style="width: 200px;"
-              - labels.each do |label_name|
-                option value="#{label_name}" *{ selected: (params[:labels].to_a.include?(label_name)) ? 'selected' : nil} = label_name
+            .form-group
+              label Assignee
+              select.form-control name="assignee"
+                option value="" Any
+                option value="*" *{ selected: params[:assignee] == '*' } Assigned
+                option value="none" *{ selected: params[:assignee] == 'none' } Unassigned
 
-        .form-group
-          .datetimepicker.input-group.date data-toggle="tooltip" data-placement="top" title="Only issues updated at or after this time are returned." data-container="body"
-            input.form-control type="datetime" name="since" data-date-format="YYYY-MM-DDTHH:MM:SSZ" value="#{params[:since]}"
-            span.input-group-addon
-              span.glyphicon.glyphicon-calendar
+            button.btn.btn-default type="submit" Go
 
-        .form-group
-          select.form-control name="assignee"
-            option value="" Any
-            option value="*" *{ selected: params[:assignee] == '*' } Assigned
-            option value="none" *{ selected: params[:assignee] == 'none' } Unassigned
+#content.snap-content.scrollable
 
+  .top-padded
+    .container-fluid
+      .row
+        .col-md-12
+          p
+            button.btn.btn-default.toggle-menu>
+              i.glyphicon.glyphicon-th-list>
+            small.text-muted * A maximum of 100 results will be returned.
 
-        button.btn.btn-default type="submit" Go
-
-  .row
-    .col-md-12
-      p
-        small.text-muted * A maximum of 100 will be returned.
-
-  - if @issues.any?
-    .row
-      .col-md-12
-        .alert.alert-warning role="alert"
-          button.close type="button" data-dismiss="alert"
-            span aria-hidden="true" &times;
-            span class="sr-only" Close
-          strong> = @issues.length
-          | matching issues.
-    .row
-      .col-md-12
-        a.btn.btn-default.btn-info type="button" href="/issues.csv?#{request.query_string}"
-          span.glyphicon.glyphicon-cloud-download>
-          | Download as CSV
-    .row
-      .col-md-12
-        table.table
-          thead
-            tr
-              th
-                | #
-              th
-                | Title
-              th
-                | Creator
-              th
-                | Assigned to
-              th
-                | State
-              th
-                | Labels
-              th.text-nowrap
-                | Created at
-              th.text-nowrap
-                | Updated at
-          tbody
-            - @issues.each do |issue|
-              tr
-                td
-                  a href="#{issue.html_url}"
+      - if @issues.any?
+        .row
+          .col-md-12
+            .alert.alert-warning role="alert"
+              button.close type="button" data-dismiss="alert"
+                span aria-hidden="true" &times;
+                span class="sr-only" Close
+              strong> = @issues.length
+              | matching issues.
+        .row
+          .col-md-12
+            a.btn.btn-default.btn-info type="button" href="/issues.csv?#{request.query_string}"
+              span.glyphicon.glyphicon-cloud-download>
+              | Download as CSV
+        .row
+          .col-md-12
+            table.table
+              thead
+                tr
+                  th
                     | #
-                    = issue.number
-                td
-                  = issue.title
-                td
-                  = issue.user.login
-                td
-                  = issue.assignee.login if issue.assignee
-                td
-                  = issue.state
-                td
-                  - if issue.labels.any?
-                    ul.list-unstyled
-                      - issue.labels.each do |label|
-                        li.text-nowrap
-                          .label-square style="background-color: ##{label.color}"
-                          a href="#{label.url}" = label.name
-                td
-                  = issue.created_at
-                td
-                  = issue.updated_at
+                  th
+                    | Title
+                  th
+                    | Creator
+                  th
+                    | Assigned to
+                  th
+                    | State
+                  th
+                    | Labels
+                  th.text-nowrap
+                    | Created at
+                  th.text-nowrap
+                    | Updated at
+              tbody
+                - @issues.each do |issue|
+                  tr
+                    td
+                      a href="#{issue.html_url}"
+                        | #
+                        = issue.number
+                    td
+                      = issue.title
+                    td
+                      = issue.user.login
+                    td
+                      = issue.assignee.login if issue.assignee
+                    td
+                      = issue.state
+                    td
+                      - if issue.labels.any?
+                        ul.list-unstyled
+                          - issue.labels.each do |label|
+                            li.text-nowrap
+                              .label-square style="background-color: ##{label.color}"
+                              a href="#{label.url}" = label.name
+                    td
+                      = issue.created_at
+                    td
+                      = issue.updated_at

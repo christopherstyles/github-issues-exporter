@@ -1,17 +1,33 @@
 doctype html
 html
   head
+    meta http-equiv="x-ua-compatible" content="IE=edge"
+    meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="apple-touch-fullscreen" content="yes"
+    meta name="google-site-verification" content="dHIjBJupeoOH63Ep9ZQMgFv3E3NQw9j2Gpaca45W1AQ"
+
     title Github Issues Exporter
     link href="#{root_path}/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" /
     link href="#{root_path}/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" /
     link rel="stylesheet" href="#{root_path}/bower_components/parsleyjs/src/parsley.css"
     link rel="stylesheet" href="#{root_path}/bower_components/select2/select2.css"
     link rel="stylesheet" href="#{root_path}/bower_components/select2-bootstrap-css/select2-bootstrap.css"
+    link rel="stylesheet" href="#{root_path}/bower_components/snapjs/snap.css"
     link rel="stylesheet" href="#{root_path}/stylesheets/app.css"
-
-    meta name="google-site-verification" content="dHIjBJupeoOH63Ep9ZQMgFv3E3NQw9j2Gpaca45W1AQ"
   body
     == partial 'navbar', locals: { user: @github_user }
+
+    / .snap-drawers
+    /   .snap-drawer.snap-drawer-left
+    /     div
+    /       h1 test
+
+
+    / #content.snap-content
+    /   h2 some content
+    /   / == yield
+
     == yield
 
   script src="#{root_path}/bower_components/jquery/dist/jquery.min.js" type="text/javascript"
@@ -20,6 +36,7 @@ html
   script src="#{root_path}/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"
   script src="#{root_path}/bower_components/parsleyjs/dist/parsley.min.js"
   script src="#{root_path}/bower_components/select2/select2.js"
+  script src="#{root_path}/bower_components/snapjs/snap.min.js"
   script src="#{root_path}/javascripts/app.js"
 
   - if ENV['RACK_ENV'] == 'production'
