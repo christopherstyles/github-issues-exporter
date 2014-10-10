@@ -45,7 +45,7 @@ module GithubIssuesExporter
 
       def issue_filters
         filters = {
-          state: params[:state],
+          state: params[:state] || 'all',
           per_page: 100,
           sort: params[:sort],
           direction: params[:direction] || 'desc',

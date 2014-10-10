@@ -31,13 +31,17 @@
           label
             input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } = ' Closed'
 
+        .radio
+          label
+            input type="radio" name="state" value="all" *{ checked: params[:state] == 'all' } = ' All'
+
         .form-group
-          select.form-control name="sort"
+          select.form-control name="sort" data-toggle="tooltip" data-placement="top" title="Sort by:" data-container="body"
             option value="created" *{ selected: params[:sort] == 'created' } Created
             option value="updated" *{ selected: params[:sort] == 'updated' } Updated
 
         .form-group
-          select.form-control name="direction"
+          select.form-control name="direction" data-toggle="tooltip" data-placement="top" title="The direction of the sort" data-container="body"
             option value="desc" *{ selected: params[:direction] == 'desc' } Descending
             option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
 
@@ -61,6 +65,11 @@
 
 
         button.btn.btn-default type="submit" Go
+
+  .row
+    .col-md-12
+      p
+        small.text-muted * A maximum of 100 will be returned.
 
   - if @issues.any?
     .row
