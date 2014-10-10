@@ -45,7 +45,7 @@
 
         .form-group
           .select2-wrapper
-            select.form-control.input-large.select2 name="labels[]" multiple="multiple" placeholder="Select a label"
+            select.form-control.select2 name="labels[]" multiple="multiple" placeholder="Select a label" style="width: 200px;"
               - labels.each do |label_name|
                 option value="#{label_name}" *{ selected: (params[:labels].to_a.include?(label_name)) ? 'selected' : nil} = label_name
 
