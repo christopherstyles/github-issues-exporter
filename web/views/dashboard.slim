@@ -27,11 +27,11 @@
 
         .radio
           label
-            input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } Open
+            input type="radio" name="state" value="open" *{ checked: params[:state] == 'open' || !params[:state] } = ' Open'
 
         .radio
           label
-            input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } Closed
+            input type="radio" name="state" value="closed" *{ checked: params[:state] == 'closed' } = ' Closed'
 
         .form-group
           select.form-control name="sort"
