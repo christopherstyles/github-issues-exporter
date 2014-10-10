@@ -15,8 +15,6 @@
                 - @github_user.api.org_repos(org.login).each do |org_repo|
                   option value="#{org_repo.full_name}" *{ selected: params[:repo] == org_repo.full_name } = "#{org_repo.full_name}"
 
-        label Issues
-
         - if @milestones.any?
           .form-group
             select.form-control name="milestone"
@@ -54,6 +52,13 @@
             input.form-control type="datetime" name="since" data-date-format="YYYY-MM-DDTHH:MM:SSZ" value="#{params[:since]}"
             span.input-group-addon
               span.glyphicon.glyphicon-calendar
+
+        .form-group
+          select.form-control name="assignee"
+            option value="" Any
+            option value="*" *{ selected: params[:assignee] == '*' } Assigned
+            option value="none" *{ selected: params[:assignee] == 'none' } Unassigned
+
 
         button.btn.btn-default type="submit" Go
 

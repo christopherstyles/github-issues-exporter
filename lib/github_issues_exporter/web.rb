@@ -49,12 +49,19 @@ module GithubIssuesExporter
           per_page: 100,
           sort: params[:sort],
           direction: params[:direction] || 'desc',
-          since: params[:since],
           labels: params[:labels].to_a.join(',')
         }
 
         if params[:milestone] && params[:milestone] != '*'
           filters.merge!(milestone: params[:milestone])
+        end
+
+        if params[:assignee] && params[:assignee] != ''
+          filters.merge!(assignee: params[:assignee])
+        end
+
+        if params[:since]
+          filters.merge!(since: params[:since])
         end
 
         filters
