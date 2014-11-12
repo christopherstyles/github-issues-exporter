@@ -24,7 +24,13 @@ module GithubIssuesExporter
 
       def issues
         return [] unless params[:repo]
-        @issues ||= github_user.api.list_issues(params[:repo], issue_filters)
+
+        if params[:q]
+          q = "repo:#{repository_name} " << params[:q]
+          @issues ||= github_user.api.search_issues(q).items
+        else
+          @issues ||= github_user.api.list_issues(params[:repo], issue_filters)
+        end
       end
 
       def labels

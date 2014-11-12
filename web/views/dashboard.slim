@@ -18,6 +18,18 @@
                     - @github_user.api.org_repos(org.login).each do |org_repo|
                       option value="#{org_repo.full_name}" *{ selected: params[:repo] == org_repo.full_name } = "#{org_repo.full_name}"
 
+            .form-group
+              label Search
+              input.form-control type="text" placeholder="Search string" name="q" value="#{params[:q]}"
+              small.help-block
+                | Find issues by state and keyword.
+                br
+                | <a href="https://developer.github.com/v3/search/#search-issues" target="_blank">API documentation</a>
+
+            button.btn.btn-default type="submit" Search
+
+            hr
+
             - if @milestones.any?
               .form-group
                 label Milestone
@@ -72,7 +84,6 @@
             button.btn.btn-default type="submit" Go
 
 #content.snap-content.scrollable
-
   .top-padded
     .container-fluid
       .row
