@@ -20,3 +20,8 @@ tmp
 *.a
 mkmf.log
 .env
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
