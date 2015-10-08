@@ -1,0 +1,2 @@
+#!/bin/sh
+HEROKU_APP=github-issues-exporter HKAPP=github-issues-exporter exec "${HEROKU_COMMAND:-heroku}" "$@"
