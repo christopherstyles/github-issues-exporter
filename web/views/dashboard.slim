@@ -26,10 +26,31 @@
                 br
                 | <a href="https://developer.github.com/v3/search/#search-issues" target="_blank">API documentation</a>
 
+            .form-group
+              label Sort by
+              select.form-control name="sort"
+                option value="created" *{ selected: params[:sort] == 'created' } Created
+                option value="updated" *{ selected: params[:sort] == 'updated' } Updated
+
+            .form-group
+              label Sort direction
+              select.form-control name="direction"
+                option value="desc" *{ selected: params[:direction] == 'desc' } Descending
+                option value="asc" *{ selected: params[:direction] == 'asc' } Ascending
+
+            .form-group
+              label Per Page
+              input.form-control type="number" placeholder="Number Per Page" name="per_page" value="#{params[:per_page] || 100}"
+
+            .form-group
+              label Page
+              input.form-control type="number" placeholder="Page Number" name="page" value="#{params[:page] || 1}"
+
             button.btn.btn-default type="submit" Search
 
             hr
 
+          form.top-padded.bottom-padded role="form" action="/dashboard" method="get" data-parsley-validate=true
             - if @milestones.any?
               .form-group
                 label Milestone

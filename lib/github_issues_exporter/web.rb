@@ -27,7 +27,7 @@ module GithubIssuesExporter
 
         if params[:q]
           q = "repo:#{repository_name} " << params[:q]
-          @issues ||= github_user.api.search_issues(q).items
+          @issues ||= github_user.api.search_issues(q, search_options).items
         else
           @issues ||= github_user.api.list_issues(params[:repo], issue_filters)
         end
@@ -71,6 +71,15 @@ module GithubIssuesExporter
         end
 
         filters
+      end
+
+      def search_options
+        {
+          order: params[:direction] || 'desc',
+          page: params[:page] || 1,
+          per_page: params[:per_page] || 100,
+          sort: params[:sort]
+        }
       end
     end
 
